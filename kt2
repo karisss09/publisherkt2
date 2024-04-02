@@ -1,0 +1,121 @@
+ class Publisher {
+    constructor(
+        protected title: string,
+        protected author:string,
+        protected pubYear:number,
+        protected copies:number
+    ) 
+    {}
+
+    getTitle():string {
+        return this.title;
+    }
+    setTitle(title:string): void {
+        this.title =title;
+    }
+    getAuthor():string {
+        return this.author;
+    }
+    setAuthor(author:string): void {
+        this.author=author;
+    }
+    getPubYear(): number {
+        return this.pubYear;
+    }
+    setPubYear(pubYear:number): void {
+        this.pubYear =pubYear;
+    }
+    getCopies():number {
+        return this.copies;
+    }
+
+}
+class Book extends Publisher {
+    constructor(title: string, author:string, pubYear:number, copies:number, privates:number) {
+        super(title, author, pubYear, copies);
+    }
+}
+
+class Magazine extends Publisher {
+    constructor(title: string, author: string, pubYear: number, copies: number, privates: number) {
+        super(title, author, pubYear, copies);
+    }
+}
+
+interface Reception {
+    delivery(): void;
+    receive(): void;
+}
+
+class Reader {
+    private items: Publisher[] = [];
+
+    constructor(private firstName: string, private lastName: string) {}
+
+    getFirstName(): string {
+        return this.firstName;
+    }
+
+    setFirstName(firstName: string): void {
+        this.firstName = firstName;
+    }
+
+    getLastName(): string {
+        return this.lastName;
+    }
+
+    setLastName(lastName: string): void {
+        this.lastName = lastName;
+    }
+
+    getItems(): Publisher[] {
+        return this.items;
+    }
+
+    addItem(item: Publisher): void {
+        if (this.items.length < 3) {
+            this.items.push(item);
+            console.log(`${item.getTitle()}`);
+        } else {
+            console.log();
+        }
+    }
+
+    removeItem(item: Publisher): void {
+        const index = this.items.indexOf(item);
+        if (index !== -1) {
+            this.items.splice(index, 1);
+            console.log(`${item.getTitle()}`);
+        }
+    }
+}
+
+class Library {
+    private publications: Publisher[] = [];
+
+    addPublication(publication: Publisher): void {
+        this.publications.push(publication);
+        console.log(` ${publication.getTitle()}`);
+    }
+
+    removePublication(publication: Publisher): void {
+        const index = this.publications.indexOf(publication);
+        if (index !== -1) {
+            this.publications.splice(index, 1);
+            console.log(`${publication.getTitle()}`);
+        }
+    }
+}
+
+const book01 = new Book();
+const magazine1 = new Magazine();
+
+const reader1 = new Reader();
+
+const library = new Library();
+library.addPublication(book01);
+library.addPublication(magazine1);
+
+reader1.addItem(book01);
+reader1.removeItem(book01); 
+console.log(reader1.getItems().map(item => item.getTitle()));
